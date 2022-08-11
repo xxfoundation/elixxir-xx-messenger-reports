@@ -28,7 +28,7 @@ func NewHandler(key, template string) Handler {
 // HandleReport accepts an interfaces.Report object and sends it as an email to the reports@xxmessenger.io account
 func (h *handler) HandleReport(msg *interfaces.Report) error {
 	senderAddress := mail.NewEmail("xxmessenger reports", "reports@xxmessenger.io")
-	recipientAddress := mail.NewEmail("xxmessenger reports group", "jonah@elixxir.io")
+	recipientAddress := mail.NewEmail("xxmessenger reports group", "reports@elixxir.io")
 	contents := fmt.Sprintf("<h2>Incident Report</h2><table><tr><th></th><th>UserID</th><th>Username</th><th>Nickname</th><th>PubKey</th></tr><tr><th>Sender</th><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr><tr><th>Receiver</th><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr></table>", msg.Sender.UserId, msg.Sender.Username, msg.Sender.Nickname, msg.Sender.ChannelPubkey, msg.Recipient.UserId, msg.Recipient.Username, msg.Recipient.Nickname, msg.Recipient.ChannelPubkey)
 	if msg.PartyName != "" || msg.PartyBlob != "" {
 		groupContents := fmt.Sprintf("<h3>Party Info</h3><table><tr><th>Party Name</th><td>%s</td></tr><tr><th>Party Blob</th><td>%s</td></tr></table>", msg.PartyName, msg.PartyBlob)
