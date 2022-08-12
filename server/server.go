@@ -24,10 +24,10 @@ type Server struct {
 }
 
 // StartServer starts an http server for processing reports
-func StartServer(key, template string, params Params) error {
+func StartServer(key, template, recipientEmail string, params Params) error {
 	jww.INFO.Printf("Starting server on port %s", params.Port)
 
-	h := report.NewHandler(key, template)
+	h := report.NewHandler(key, template, recipientEmail)
 
 	impl := Server{}
 

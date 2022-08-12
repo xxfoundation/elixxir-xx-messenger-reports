@@ -47,7 +47,7 @@ var serverCmd = &cobra.Command{
 			Port:     viper.GetString("port"),
 		}
 
-		err = server.StartServer(viper.GetString("sendgridKey"), "<div>%s</div>", params)
+		err = server.StartServer(viper.GetString("sendgridKey"), "<div>%s</div>", viper.GetString("recipientEmail"), params)
 		var stopCh = make(chan bool)
 		select {
 		case <-stopCh:
