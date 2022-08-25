@@ -1,3 +1,10 @@
+///////////////////////////////////////////////////////////////////////////////
+// Copyright © 2020 xx network SEZC                                          //
+//                                                                           //
+// Use of this source code is governed by a license that can be found in the //
+// LICENSE file                                                              //
+///////////////////////////////////////////////////////////////////////////////
+
 package cmd
 
 import (
@@ -47,7 +54,8 @@ var serverCmd = &cobra.Command{
 			Port:     viper.GetString("port"),
 		}
 
-		err = server.StartServer(viper.GetString("sendgridKey"), "<div>%s</div>", params)
+		err = server.StartServer(viper.GetString("sendgridKey"),
+			"<div>%s</div>", params)
 		var stopCh = make(chan bool)
 		select {
 		case <-stopCh:
@@ -77,7 +85,8 @@ func initConfig() {
 	var err error
 	validConfig = true
 	if cfgFile == "" {
-		cfgFile, err = utils.SearchDefaultLocations("reports.yaml", "xxnetwork")
+		cfgFile, err = utils.SearchDefaultLocations("reports.yaml",
+			"xxnetwork")
 		if err != nil {
 			validConfig = false
 			jww.FATAL.Panicf("Failed to find config file: %+v", err)
@@ -86,7 +95,8 @@ func initConfig() {
 		cfgFile, err = utils.ExpandPath(cfgFile)
 		if err != nil {
 			validConfig = false
-			jww.FATAL.Panicf("Failed to expand config file path: %+v", err)
+			jww.FATAL.Panicf("Failed to expand config file path: %+v",
+				err)
 		}
 	}
 
@@ -109,12 +119,14 @@ func initLog() {
 		// Set the GRPC log level
 		err := os.Setenv("GRPC_GO_LOG_SEVERITY_LEVEL", "info")
 		if err != nil {
-			jww.ERROR.Printf("Could not set GRPC_GO_LOG_SEVERITY_LEVEL: %+v", err)
+			jww.ERROR.Printf("Could not set GRPC_GO_LOG_SEVERITY_LEVEL"+
+				": %+v", err)
 		}
 
 		err = os.Setenv("GRPC_GO_LOG_VERBOSITY_LEVEL", "99")
 		if err != nil {
-			jww.ERROR.Printf("Could not set GRPC_GO_LOG_VERBOSITY_LEVEL: %+v", err)
+			jww.ERROR.Printf("Could not set GRPC_GO_LOG_VERBOSITY_LEVEL"+
+				": %+v", err)
 		}
 		// Turn on trace logs
 		jww.SetLogThreshold(jww.LevelTrace)

@@ -1,3 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////
+// Copyright © 2020 xx network SEZC                                          //
+//                                                                           //
+// Use of this source code is governed by a license that can be found in the //
+// LICENSE file                                                              //
+///////////////////////////////////////////////////////////////////////////////
+
+// The server package contains the code to run an http server, accepting post
+// requests containing report data from an xx messenger user.
+
 package server
 
 import (
@@ -13,6 +23,7 @@ import (
 	"time"
 )
 
+// Params for report server
 type Params struct {
 	KeyPath  string
 	CertPath string
@@ -57,11 +68,13 @@ func StartServer(key, template string, params Params) error {
 		//jww.WARN.Println("NO TLS CONFIGURED")
 		return r.Run(fmt.Sprintf("0.0.0.0:%s", params.Port))
 	} else {
-		return r.RunTLS(fmt.Sprintf("0.0.0.0:%s", params.Port), params.CertPath, params.KeyPath)
+		return r.RunTLS(fmt.Sprintf("0.0.0.0:%s", params.Port),
+			params.CertPath, params.KeyPath)
 	}
 }
 
-// handleReport helper function is called by the post endpoint for reports, and accepts a handler and an io.ReadCloser body
+// handleReport helper function is called by the post endpoint for reports.
+// It accepts a report.Handler interface and an io.ReadCloser body
 func handleReport(handler report.Handler, body io.ReadCloser) error {
 	requestData, err := ioutil.ReadAll(body)
 	if err != nil {
